@@ -20,8 +20,9 @@ function sink (number) {
 
 Changes for each release.
 
-### Version 0.0.0 &mdash;
+### Version 0.0.0 &mdash; Wed Jul 18 06:22:28 UTC 2012
 
+ * Add Travis CI chicklet to `README.md`. #7.
  * Create facility to subscribe to only one event. #6.
  * Create publish and subscribe. #5.
  * Build on Travis CI. #3.
