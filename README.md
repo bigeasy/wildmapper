@@ -1,4 +1,4 @@
-# Conduit
+# Conduit [![Build Status](https://secure.travis-ci.org/bigeasy/conduit.png?branch=master)](http://travis-ci.org/bigeasy/conduit)
 
 A minimalist event library for web applications.
 
