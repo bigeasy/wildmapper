@@ -1,0 +1,20 @@
+{ "name": "conduit"
+, "description": "A event system for the browser that also runs server side in Node.js."
+, "author": "Alan Gutierrez"
+, "version": "0.0.1"
+, "keywords": [ "router", "html5", "middleware", "async", "asynchronous" ]
+, "licenses": [
+  { "type": "MIT"
+  , "url": "http://github.com/bigeasy/conduit/raw/master/LICENSE"
+  }]
+, "repository":
+  { "type": "git"
+  , "url": "http://github.com/bigeasy/conduit.git"
+  }
+, "scripts" : { "test": "proof platform win32 && proof t/*/*.t || t/test" }
+, "devDependencies":
+  { "proof": "0.0.15"
+  , "uglify-js": "~1.3"
+  }
+, "dependencies": {}
+}
