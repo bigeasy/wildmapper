@@ -1,7 +1,7 @@
 { "name": "conduit"
 , "description": "A event system for the browser that also runs server side in Node.js."
 , "author": "Alan Gutierrez"
-, "version": "0.0.1"
+, "version": "0.0.0"
 , "keywords": [ "router", "html5", "middleware", "async", "asynchronous" ]
 , "licenses": [
   { "type": "MIT"
