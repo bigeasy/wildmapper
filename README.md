@@ -1,13 +1,13 @@
-# Conduit [![Build Status](https://secure.travis-ci.org/bigeasy/conduit.png?branch=master)](http://travis-ci.org/bigeasy/conduit)
+# Signal [![Build Status](https://secure.travis-ci.org/bigeasy/signal.png?branch=master)](http://travis-ci.org/bigeasy/signal)
 
 A minimalist event library for web applications.
 
 ```javascript
-var conduit = require('conduit').createConduit(),
+var signal = require('signal').createConduit(),
     equal = require('assert').equal;
 
-var source = conduit.publish('namespace.name');
-conduit.subscribe('namespace.name', sink);
+var source = signal.publish('namespace.name');
+signal.subscribe('namespace.name', sink);
 
 source(1);
 
