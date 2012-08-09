@@ -5,7 +5,7 @@
 } (function () {
   var slice = [].slice, published = {}, subscriptions = {}, samples = {};
 
-  function Conduit () {
+  function Signal () {
     function publish (path) {
       var source = published[path];
       if (!source) {
@@ -42,5 +42,5 @@
     this.sample = sample;
   }
 
-  return { createConduit: function () { return new Conduit() } }
+  return { createSignal: function () { return new Signal() } }
 });

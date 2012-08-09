@@ -1,4 +1,4 @@
-{ "name": "conduit"
+{ "name": "signal"
 , "description": "A event system for the browser that also runs server side in Node.js."
 , "author": "Alan Gutierrez"
 , "version": "0.0.0"
