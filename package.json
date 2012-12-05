@@ -1,17 +1,17 @@
 { "name": "signal"
-, "description": "A event system for the browser that also runs server side in Node.js."
+, "description": "A minimalist event library for web applications."
 , "author": "Alan Gutierrez"
-, "version": "0.0.0"
-, "keywords": [ "router", "html5", "middleware", "async", "asynchronous" ]
+, "version": "0.0.1"
+, "keywords": [ "router", "events", "html5", "middleware", "async", "asynchronous" ]
 , "licenses": [
   { "type": "MIT"
-  , "url": "http://github.com/bigeasy/conduit/raw/master/LICENSE"
+  , "url": "http://github.com/bigeasy/signal/raw/master/LICENSE"
   }]
 , "repository":
   { "type": "git"
-  , "url": "http://github.com/bigeasy/conduit.git"
+  , "url": "http://github.com/bigeasy/signal.git"
   }
-, "scripts" : { "test": "proof platform win32 && proof t/*/*.t || t/test" }
+, "scripts" : { "test": "proof platform win32 && proof t/*/*.t.js || t/test" }
 , "devDependencies":
   { "proof": "0.0.15"
   , "uglify-js": "~1.3"
