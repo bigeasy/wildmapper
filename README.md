@@ -20,6 +20,10 @@ function sink (number) {
 
 Changes for each release.
 
+### Version 0.0.2
+
+ * Begin experimentation with promises. #13.
+
 ### Version 0.0.1
 
 *Released: Mon Nov  5 03:38:32 UTC 2012*

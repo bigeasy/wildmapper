@@ -1,8 +1,9 @@
 { "name": "signal"
-, "description": "A minimalist event library for web applications."
+, "description": "A minimalist promised based event library for web applications."
 , "author": "Alan Gutierrez"
-, "version": "0.0.1"
-, "keywords": [ "router", "events", "html5", "middleware", "async", "asynchronous" ]
+, "version": "0.0.2"
+, "keywords": [ "promise", "promises", "router", "events", "html5",
+  "middleware", "async", "asynchronous" ]
 , "licenses": [
   { "type": "MIT"
   , "url": "http://github.com/bigeasy/signal/raw/master/LICENSE"
