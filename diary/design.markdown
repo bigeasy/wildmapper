@@ -1,5 +1,31 @@
 # Signal Design
 
+## Incoming
+
+Maybe it is a function builder, like cadence, but with a helper that builds on
+promises, and you have a function like `step` that gathers, but you name your
+steps, etc, etc.
+
+```
+var deleteIf = signal(function (vow, file) {
+  fs.stat(file, vow());
+
+  vow(function (stat) {
+  });
+
+
+  vow(function (stat) {
+  });
+});
+```
+
+Actually, the overhead, the ugliness comes from building that one...
+
+I like promises for control flow, but not for APIs.
+
+Note how the Promises in JavaScript are some sort of API to promises, API first,
+specification first, uh, isn't that what you call your waterfall design there?
+
 ## Message Bus
 
 Not sure if Signal includes a message bus. There is a notion that I'm trying to
