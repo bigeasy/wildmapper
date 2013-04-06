@@ -3,7 +3,7 @@
   else if (typeof define == "function") define(definition);
   else this.signal = definition();
 } (function () {
-  var slice = [].slice, published = {}, subscriptions = {}, samples = {};
+  var __slice = [].slice, published = {}, subscriptions = {}, samples = {};
 
   function Signal () {
     function publish (path) {
@@ -42,5 +42,40 @@
     this.sample = sample;
   }
 
-  return { createSignal: function () { return new Signal() } }
+  function signal () {
+    var callbacks = [], called = 0, latch, action;
+
+    function callback () {
+      var vargs = __slice.call(arguments);
+      if (vargs.length) {
+        action = vargs.shift();
+        latch();
+      } else {
+        var callback = {}, parameters = [];
+        callbacks.push(callback);
+        return function () {
+          var vargs = __slice.call(arguments);
+          if (vargs[0]) {
+            throw new Error();
+          } else {
+            callback.vargs = vargs; 
+          }
+          if (++called == callbacks.length) {
+            callbacks.forEach(function (callback) {
+              parameters.push.apply(parameters, callback.vargs.slice(1));
+            });
+            action.apply(null, parameters);
+          }
+        }
+      }
+    }
+
+    latch = callback();
+
+    return callback;
+  }
+
+  signal.createSignal = function () { return new Signal() };
+
+  return signal;
 });
