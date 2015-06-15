@@ -13,7 +13,7 @@
           var subscribers = subscriptions[path],
               once = samples[path] || [],
               i, I;
-          for (i = 0, I = subscribers.length; i < I; i++) 
+          for (i = 0, I = subscribers.length; i < I; i++)
             subscribers[i].apply(this, arguments);
           for (i = once.length - 1; i != -1; i--)
             subscribers.splice(once[1], 1);
@@ -58,7 +58,7 @@
           if (vargs[0]) {
             throw new Error();
           } else {
-            callback.vargs = vargs; 
+            callback.vargs = vargs;
           }
           if (++called == callbacks.length) {
             callbacks.forEach(function (callback) {
