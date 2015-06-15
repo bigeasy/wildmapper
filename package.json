@@ -3,20 +3,24 @@
     "description":      "An adaptor to convert EventEmitter events into an error-first callback invocations.",
     "author":           "Alan Gutierrez",
     "version":          "0.0.2",
-    "keywords": [
+    "keywords":
+    [
                         "promise", "promises", "router", "events", "html5", "middleware",
                         "async", "asynchronous"
     ],
     "main":             "signal",
     "license":          "MIT",
-    "repository": {
+    "repository":
+    {
                         "type": "git",
                         "url": "http://github.com/bigeasy/signal.git"
     },
-    "scripts" : {
+    "scripts":
+    {
                         "test": "proof platform win32 && proof test t/*/*.t.js || t/test"
     },
-    "devDependencies": {
+    "devDependencies":
+    {
                         "cadence": "0.0.54",
                         "proof": "0.0.51",
                         "uglify-js": "~1.3"
