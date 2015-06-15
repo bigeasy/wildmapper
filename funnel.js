@@ -2,7 +2,6 @@ var cadence = require('cadence/redux')
 var slice = [].slice
 
 function Signal (ee, error) {
-    if (!(this instanceof Signal)) return new Signal(ee, error)
     this.ee = ee
     this._wrapped = []
     this._error = error

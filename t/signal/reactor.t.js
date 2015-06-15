@@ -1,131 +1,97 @@
-require('proof')(1, prove)
-
-var Reactor = require('../../reactor')
-var cadence = require('cadence/redux')
-
-function Service (ee) {
-    this.packets = []
-    this.reactor = new Reactor(ee, this, 'error')
-                           .on('connect')
-                           .on('packet')
-                           .on('error', Reactor.raise)
-}
-
-Service.prototype.connect = cadence(function (async) {
-    this.connected = true
-})
-
-Service.prototype.packet = cadence(function (async, packet) {
-    this.packets.push(packet)
-})
-
-Service.prototype.error = function (error, event) {
-    this.caught = { error: error, event: event }
-}
+require('proof')(7, prove)
 
 function prove (assert) {
+    var Reactor = require('../../reactor')
+    var cadence = require('cadence/redux')
+
+    function Service (ee) {
+        this.packets = []
+        this.reactor = new Reactor(ee, this, 'error')
+                               .on('connect')
+                               .on('packet')
+                               .on('error', Reactor.raise)
+    }
+
+    Service.prototype.connect = cadence(function (async) {
+        this.connected = true
+    })
+
+    Service.prototype.packet = cadence(function (async, packet) {
+        this.packets.push(packet)
+    })
+
+    Service.prototype.error = function (error, event) {
+        this.caught = { error: error, event: event }
+    }
+
     var events = require('events')
-    var object
+    var object = {}
     var reactor = new Reactor(new events.EventEmitter, object, 'error')
 
-    object.packet = function () {
+    object.packet = function (packet, callback) {
         assert(packet, {}, 'method called')
+        callback()
     }
     reactor.on('packet')
-    reactor.ee.on('packet', {})
+    reactor.ee.emit('packet', {})
 
-    return
-    var errored
-    var signal = new Signal(ee, function (error, event) {
-        errored(error, event)
+    reactor.on('error', Reactor.raise)
+    object.error = function (error, event) {
+        assert(error.message, 'emitted', 'funneled error')
+        assert(event, 'error', 'funneled event')
+    }
+    reactor.ee.emit('error', new Error('emitted'))
+
+    delete object.packet
+    reactor.on('packet', 'reassign')
+    object.reassign = function (packet, callback) {
+        assert(packet, {}, 'method reassigned')
+        callback()
+    }
+    reactor.ee.emit('packet', {})
+
+    delete object.reassign
+    reactor.once('packet')
+    object.packet = function (packet, callback) {
+        assert(packet, {}, 'method once')
+        callback()
+    }
+    reactor.ee.emit('packet', {})
+    delete object.packet
+    reactor.ee.emit('packet', {})
+
+    reactor.once('packet', function (packet) {
+        assert(packet, {}, 'once assigned')
     })
-    assert(signal.ee === ee, 'constructed')
+    reactor.ee.emit('packet', {})
 
-    // arity
-    var slice = [].slice
-    var vargs
-    signal.on('packet', cadence(function () {
-        vargs = slice.call(arguments, 1)
-    }))
-    signal.on('raise', raise)
-    signal.on('error', Signal.error)
+    // Test assigning a once handler when there is none there.
+    reactor.once('packet')
+    object.packet = function (packet, callback) {
+        assert(packet, {}, 'method once again')
+        callback()
+    }
+    reactor.ee.emit('packet', {})
 
-    errored = function () {
+    object.packet = function () {
         assert(false, 'should not be called')
     }
-    signal.ee.emit('packet')
-    assert(vargs, [], 'zero arguments')
+    reactor.once('packet')
 
-    // Assert that if the user wants to throw an error, we won't catch it; we'll
-    // let it unwind the stack.
-    var errored = function (error) { throw error }
-    try {
-        signal.ee.emit('error', new Error('panic'))
-    } catch (e) {
-        assert(e.message, 'panic', 'can panic')
-    }
+    // Test removing when the method does not match.
+    reactor.removeListener('packet', 'named')
 
-    // Assert that `Signal.error` does nothing when called with no arguments.
-    Signal.error()
+    // Test removing a specific listener.
+    reactor.removeListener('packet')
+    reactor.ee.emit('packet', {})
 
-    // Assert that we catch errors.
-    errored = function (error, event) {
-        assert(error.message, 'risen', 'catcher error')
-        assert(event, 'raise', 'catcher event')
-    }
-    signal.ee.emit('raise')
+    // Test remove all listeners when the listener does not exist.
+    reactor.removeAllListeners('connect')
 
-    errored = function () {
-        assert(false, 'should not be called')
-    }
-    // Assert that we can remove an error listener.
-    signal.removeListener('raise', raise)
-    signal.ee.emit('raise')
+    // Test removing all isteners.
+    reactor.once('packet')
+    reactor.removeAllListeners('packet')
+    reactor.ee.emit('packet', {})
 
-    // Assert that when we set a callback to run once that it only runs once and
-    // that we remove the wrapper function from the array of wrapper functions.
-    errored = function (error, event) {
-        assert(event, 'raise', 'invoked once')
-    }
-    signal.once('raise', raise)
-    signal.ee.emit('raise')
-
-    assert(signal._wrapped.length, 2, 'raise removed')
-    errored = function () {
-        assert(false, 'should not be called')
-    }
-    signal.ee.emit('raise')
-
-    // Assert that we can invoke multiple listeners.
-    errored = function (error, event) {
-        assert(event, 'raise', 'invoked many one')
-    }
-    signal.on('raise', raise)
-    signal.on('raise', function () {
-        assert(true, 'invoked many two')
-    })
-    signal.ee.emit('raise')
-    signal.removeAllListeners('raise')
-
-    // Assert that we can remove all listeners.
-    errored = function () {
-        assert(false, 'should not be called')
-    }
-    signal.ee.emit('raise')
-    assert(signal._wrapped.length, 2, 'all removed')
-
-    // Assert that we can remove a listener that is not.
-    signal.removeListener('raise', raise)
-
-    // Assert that `EventEmitter` behaves the same way when we remove a listener
-    // that is not there.
-    signal.ee.removeListener('raise', function () {})
-
-    function raise () {
-        throw new Error('risen')
-    }
-
-    var reactor = new Reactor(new EventEmitter)
-
-    reactor.signal.ee.emit('packet', { command: 'foo' })
+    Reactor.raise()
 }
