@@ -7,7 +7,7 @@ if [ "$TRAVIS" = "true" ]; then
   sudo apt-get install -q -q bc 2> /dev/null > /dev/null
 fi
 
-t/sizes signal.js | sed 's/^/    /'
+t/sizes funnel.js | sed 's/^/    /'
 
 echo ""
 
@@ -26,12 +26,12 @@ if [ "$TRAVIS" = "true" ] || [ "$MINIFY" = "true" ]; then
   default=$(cat index.js | uglifyjs | gzip -c | wc -c)
   lift=$(cat index.js | uglifyjs --lift-vars | gzip -c | wc -c)
 
-  bak=signal-$(date +'%FT%T').js
-  mv signal.js $bak
+  bak=funnel-$(date +'%FT%T').js
+  mv funnel.js $bak
   if [ $default -lt $lift ]; then
-    cat $bak | uglifyjs > signal.js
+    cat $bak | uglifyjs > funnel.js
   else
-    cat $bak | uglifyjs --lift-vars > signal.js
+    cat $bak | uglifyjs --lift-vars > funnel.js
   fi
 
   (proof run t/*/*.t.js | tee .proof.out | proof progress) || (proof errors < .proof.out) || exit 1
