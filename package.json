@@ -22,7 +22,8 @@
                         "test": "proof platform win32 && proof test t/*/*.t.js || t/test"
     },
     "devDependencies": {
-                        "proof": "0.0.27",
+                        "cadence": "0.0.54",
+                        "proof": "0.0.51",
                         "uglify-js": "~1.3"
     },
     "dependencies": {}
