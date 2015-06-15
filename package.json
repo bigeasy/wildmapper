@@ -2,7 +2,7 @@
     "name":             "signal",
     "description":      "An adaptor to convert EventEmitter events into an error-first callback invocations.",
     "author":           "Alan Gutierrez",
-    "version":          "0.0.2",
+    "version":          "0.0.3",
     "keywords":
     [
                         "promise", "promises", "router", "events", "html5", "middleware",
