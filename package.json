@@ -1,6 +1,6 @@
 {
     "name":             "signal",
-    "description":      "A minimalist promised based event library for web applications.",
+    "description":      "An adaptor to convert EventEmitter events into an error-first callback invocations.",
     "author":           "Alan Gutierrez",
     "version":          "0.0.2",
     "keywords": [
