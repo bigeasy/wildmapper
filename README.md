@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bigeasy/signal.svg?branch=master)](https://travis-ci.org/bigeasy/signal) [![Coverage Status](https://coveralls.io/repos/bigeasy/signal/badge.svg?branch=master&service=github)](https://coveralls.io/github/bigeasy/signal?branch=master)
+
 Fast in-process message conduit.
 
 ### Synopsis
