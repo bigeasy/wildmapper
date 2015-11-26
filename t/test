@@ -2,39 +2,19 @@
 
 set -e
 
-if [ "$TRAVIS" = "true" ]; then
-  echo '$ sudo apt-get install bc' && echo ''
-  sudo apt-get install -q -q bc 2> /dev/null > /dev/null
-fi
-
-t/sizes funnel.js | sed 's/^/    /'
-
 echo ""
 
 (proof run t/*/*.t.js | tee .proof.out | proof progress) || (proof errors < .proof.out) || exit 1
 
-if [ "$TRAVIS" = "true" ] || [ "$MINIFY" = "true" ]; then
-  echo "generating coverage"
+if [ "$TRAVIS" = "true" ]; then
+  echo ""
+  echo "running with coverage"
   t/cover
-
-  echo "submitting coverage to coveralls.io"
-  cat coverage/lcov.info | node_modules/.bin/coveralls > /dev/null
-
+  node_modules/.bin/istanbul report --format text
   echo ""
-  echo "minified"
-  echo ""
-  default=$(cat index.js | uglifyjs | gzip -c | wc -c)
-  lift=$(cat index.js | uglifyjs --lift-vars | gzip -c | wc -c)
 
-  bak=funnel-$(date +'%FT%T').js
-  mv funnel.js $bak
-  if [ $default -lt $lift ]; then
-    cat $bak | uglifyjs > funnel.js
-  else
-    cat $bak | uglifyjs --lift-vars > funnel.js
-  fi
-
-  (proof run t/*/*.t.js | tee .proof.out | proof progress) || (proof errors < .proof.out) || exit 1
+  echo "submitting to coveralls.io"
+  (cat coverage/lcov.info | node_modules/.bin/coveralls) > /dev/null 2>&1
 fi
 
 echo ""

@@ -25,5 +25,8 @@
                         "proof": "0.0.51",
                         "uglify-js": "~1.3"
     },
-    "dependencies": {}
+    "dependencies":
+    {
+                        "wildmap":  "0.0.1"
+    }
 }
