@@ -8,15 +8,15 @@ Thoughts, really. Names are qualified by
 var signal = require('signal')
 
 
-signal.on('.bigeasy.paxos.log', function (level, message) {
+signal.subscribe('.bigeasy.paxos.log'.split('.'), function (level, message) {
     console.log({ level: level, message: message })
 })
 
-signal.on('.bigeasy.paxos.log.error', function (level, message) {
+signal.subscribe('.bigeasy.paxos.log.error'.split('.'), function (level, message) {
     console.log({ level: level, message: message })
 })
 
-signal.on('.*.*.log', function (level, message) {
+signal.subscribe('.*.*.log'.split('.'), function (level, message) {
     console.log({ level: level, message: message })
 })
 ```
@@ -30,7 +30,7 @@ listener. This makes them all targets for compilation by the JIT compiler.
 var signal = require('signal')
 
 funtion logInfo (message) {
-    var subscribers = signal.subscribers('bigeasy.paxos.log')
+    var subscribers = signal.subscribers('.bigeasy.paxos.log'.split('.'))
 
     for (var i = 0, I = subscribers.length; i < I, i++) {
         subscribers[i]('info', { key: 'value' })
@@ -50,16 +50,19 @@ funtion logInfo (message) {
 }
 ```
 
-But if you do care, for a high-volume message the performace is going to be much
-better running through the loop yourself.
+But if you do care, for a high-volume message the performance is going to be
+much better running through the loop yourself.
 
 There are no error handling conventions as of yet. The naming convention is
 based on your GitHub name and the project name.
 
-#### `signal = new Signal`
+#### `signal = require('signal')`
 
-Create a signal object.
+Signal has a single object to simplify service discovery. This means that all
+your modules must use the same version of Signal.
 
-#### `signal.get(path)`
+#### `signal.subscribe(path, listener)`
 
-Get a branch for the given path
+Subscribe to a message with the given listener. The listener can be anything,
+including an object or perhaps a connect string for a message queue. The type of
+listener is publisher dependent.
