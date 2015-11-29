@@ -15,18 +15,16 @@
                         "type": "git",
                         "url": "http://github.com/bigeasy/signal.git"
     },
-    "scripts":
-    {
-                        "test": "proof platform win32 && proof test t/*/*.t.js || t/test"
-    },
-    "devDependencies":
-    {
-                        "cadence": "0.0.54",
-                        "proof": "0.0.56",
-                        "uglify-js": "~1.3"
-    },
     "dependencies":
     {
                         "wildmap":  "0.0.1"
+    },
+    "devDependencies":
+    {
+                        "proof": "0.0.56"
+    },
+    "scripts":
+    {
+                        "test": "proof platform win32 && proof test t/*/*.t.js || t/test"
     }
 }
