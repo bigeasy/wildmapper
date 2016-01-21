@@ -17,7 +17,7 @@
     },
     "dependencies":
     {
-                        "wildmap":  "0.0.2"
+                        "wildmap":  "1.0.x"
     },
     "devDependencies":
     {
